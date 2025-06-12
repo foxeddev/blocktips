@@ -6,13 +6,22 @@ __all__ = [
 
 from typing import Optional
 
-from beet import Context, ItemModel, Model, Texture, PluginOptions, configurable
+from beet import (
+    Advancement,
+    Context,
+    ItemModel,
+    Model,
+    Texture,
+    PluginOptions,
+    configurable,
+)
 from beet.core.utils import normalize_string
 
 
 class AdvancementIconOptions(PluginOptions):
+    advancement_path: Optional[str] = None
     pack_namespace: Optional[str] = None
-    texture_source: Optional[str] = "src/pack.png"
+    texture_source: Optional[str] = None
 
 
 def beet_default(ctx: Context):
@@ -23,23 +32,27 @@ def beet_default(ctx: Context):
 def advancement_icon(ctx: Context, opts: AdvancementIconOptions):
 
     namespace = opts.pack_namespace or normalize_string(ctx.project_id)
+    advancement_path = opts.advancement_path or f"{namespace}:installed"
+    texture_source = opts.texture_source or "src/pack.png"
 
-    if "installation_advancement" not in ctx.meta:
-        ctx.meta["installation_advancement"] = {}
-
-    ctx.meta["installation_advancement"]["icon"] = create_icon_meta(namespace)
-    ctx.assets[f"{namespace}:icon"] = create_item_model(namespace)
-    ctx.assets[f"{namespace}:item/icon"] = create_model(namespace)
-    ctx.assets[f"{namespace}:item/icon"] = create_texture(
-        opts.texture_source or "src/pack.png"
+    ctx.data.advancements[advancement_path].data["display"]["icon"] = (
+        create_advancement_icon(namespace).data["display"]["icon"]
     )
 
+    ctx.assets[f"{namespace}:icon"] = create_item_model(namespace)
+    ctx.assets[f"{namespace}:item/icon"] = create_model(namespace)
+    ctx.assets[f"{namespace}:item/icon"] = Texture(source_path=texture_source)
 
-def create_icon_meta(namespace: str):
-    return dict(
+
+def create_advancement_icon(namespace):
+    return Advancement(
         {
-            "id": "minecraft:paper",
-            "components": {"item_model": f"{namespace}:icon"},
+            "display": {
+                "icon": {
+                    "id": "minecraft:paper",
+                    "components": {"item_model": f"{namespace}:icon"},
+                }
+            }
         }
     )
 
@@ -62,7 +75,3 @@ def create_model(namespace: str):
             "textures": {"layer0": f"{namespace}:item/icon"},
         }
     )
-
-
-def create_texture(texture_source: str):
-    return Texture(source_path=texture_source)
