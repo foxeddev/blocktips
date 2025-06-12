@@ -7,7 +7,6 @@ __all__ = [
 from typing import Optional
 
 from beet import (
-    Advancement,
     Context,
     ItemModel,
     Model,
@@ -36,7 +35,7 @@ def advancement_icon(ctx: Context, opts: AdvancementIconOptions):
     texture_source = opts.texture_source or "src/pack.png"
 
     ctx.data.advancements[advancement_path].data["display"]["icon"] = (
-        create_advancement_icon(namespace).data["display"]["icon"]
+        create_advancement_icon(namespace)
     )
 
     ctx.assets[f"{namespace}:icon"] = create_item_model(namespace)
@@ -45,16 +44,10 @@ def advancement_icon(ctx: Context, opts: AdvancementIconOptions):
 
 
 def create_advancement_icon(namespace):
-    return Advancement(
-        {
-            "display": {
-                "icon": {
-                    "id": "minecraft:paper",
-                    "components": {"item_model": f"{namespace}:icon"},
-                }
-            }
-        }
-    )
+    return {
+        "id": "minecraft:paper",
+        "components": {"item_model": f"{namespace}:icon"},
+    }
 
 
 def create_item_model(namespace: str):
