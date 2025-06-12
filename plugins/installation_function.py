@@ -6,8 +6,8 @@ __all__ = [
 
 from typing import Optional
 
-from beet import Advancement, Context, PluginOptions, configurable
-from beet.core.utils import JsonDict, normalize_string
+from beet import Context, PluginOptions, configurable
+from beet.core.utils import normalize_string
 
 
 class InstallationFunctionOptions(PluginOptions):
@@ -27,6 +27,10 @@ def installation_function(ctx: Context, opts: InstallationFunctionOptions):
     advancement_path = opts.advancement_path or f"{namespace}:installed"
     function_path = opts.function_path or f"{namespace}:installed"
 
-    ctx.data.advancements[advancement_path].data["rewards"] = {
-        "function": f"{function_path}"
-    }
+    ctx.data.advancements[advancement_path].data["rewards"] = create_advancement_reward(
+        function_path
+    )
+
+
+def create_advancement_reward(function_path):
+    return {"function": f"{function_path}"}
