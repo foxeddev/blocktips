@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "beet",
+      "label": "beet: watch",
       "icon": {
         "id": "eye-watch"
       },
@@ -10,6 +10,7 @@
       "command": ".venv/bin/beet",
       "args": ["watch"],
       "isBackground": true,
+      "dependsOn": "Set up virtual environment",
       "problemMatcher": [],
       "runOptions": {
         "runOn": "folderOpen"
@@ -21,6 +22,9 @@
     },
     {
       "label": "Set up virtual environment",
+      "icon": {
+        "id": "python"
+      },
       "type": "shell",
       "windows": {
         "command": "if not exist .venv (python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt)"
