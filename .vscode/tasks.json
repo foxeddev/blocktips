@@ -18,6 +18,27 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "Set up virtual environment",
+      "type": "shell",
+      "windows": {
+        "command": "if not exist .venv (python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt)"
+      },
+      "linux": {
+        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+      },
+      "osx": {
+        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     }
   ]
 }
