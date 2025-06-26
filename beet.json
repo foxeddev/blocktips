@@ -1,0 +1,41 @@
+{
+  "id": "beet_template",
+  "name": "Beet Template",
+  "version": "1.2.0",
+  "description": "A pre-configured template to quickly set up your Minecraft Beet project.",
+  "author": "Rotsteinfuchs",
+  "output": "build",
+  "require": [
+    "bolt",
+    "beet.contrib.inline_function_tag"
+  ],
+  "data_pack": {
+    "load": [
+      "src"
+    ],
+    "render": {
+      "functions": [
+        "*"
+      ]
+    }
+  },
+  "resource_pack": {
+    "load": [
+      "src"
+    ]
+  },
+  "pipeline": [
+    "build.main",
+    "beet.contrib.installation_advancement",
+    "plugins.advancement_icon",
+    "plugins.installation_function",
+    "mecha",
+    "beet.contrib.minify_function",
+    "beet.contrib.minify_json"
+  ],
+  "meta": {
+    "installation_advancement": {
+      "project_advancement_path": "beet_template:installed"
+    }
+  }
+}
