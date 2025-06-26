@@ -27,13 +27,13 @@
       },
       "type": "shell",
       "windows": {
-        "command": "if not exist .venv (python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt)"
+        "command": "if not exist .venv (python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt) || exit /b 0"
       },
       "linux": {
-        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true"
       },
       "osx": {
-        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true"
       },
       "problemMatcher": [],
       "runOptions": {
