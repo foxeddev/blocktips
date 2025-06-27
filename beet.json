@@ -35,7 +35,7 @@
   ],
   "meta": {
     "installation_advancement": {
-      "project_advancement_path": "beet_template:installed"
+      "project_advancement_path": "blocktips:installed"
     }
   }
 }
