@@ -47,7 +47,7 @@ def installation_function(ctx: Context, opts: InstallationFunctionOptions):
 
     ctx.data.functions[install_function_path] = create_install_function(
         ctx,
-        uninstall_function_tag,
+        install_function_tag,
         send_success_messages,
         send_error_messages,
     )
@@ -55,7 +55,6 @@ def installation_function(ctx: Context, opts: InstallationFunctionOptions):
     ctx.data.functions[uninstall_function_path] = create_uninstall_function(
         ctx,
         uninstall_function_tag,
-        advancement_path,
         send_success_messages,
         send_error_messages,
     )
@@ -84,9 +83,7 @@ def create_install_function(ctx, function_tag, success_messages, error_messages)
     return f
 
 
-def create_uninstall_function(
-    ctx, function_tag, advancement, success_messages, error_messages
-):
+def create_uninstall_function(ctx, function_tag, success_messages, error_messages):
     f = Function()
 
     if error_messages:
