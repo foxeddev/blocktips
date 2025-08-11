@@ -20,7 +20,7 @@
         "command": "./.vscode/task_linux.sh"
       },
       "windows": {
-        "command": "./.vscode/task_windows.ps1"
+        "command": "./.vscode/task_windows.bat"
       }
     }
   ]
