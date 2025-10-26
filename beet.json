@@ -28,7 +28,6 @@
     "build.main",
     "beet.contrib.installation_advancement",
     "plugins.advancement_icon",
-    "plugins.installation_function",
     "mecha",
     "beet.contrib.minify_function",
     "beet.contrib.minify_json"
