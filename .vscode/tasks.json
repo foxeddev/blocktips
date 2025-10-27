@@ -2,15 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "beet: watch",
+      "label": "beet",
       "icon": {
         "id": "eye-watch"
       },
-      "type": "process",
-      "command": ".venv/bin/beet",
-      "args": ["watch"],
+      "type": "shell",
       "isBackground": true,
-      "dependsOn": "Set up virtual environment",
       "problemMatcher": [],
       "runOptions": {
         "runOn": "folderOpen"
@@ -18,30 +15,12 @@
       "group": {
         "kind": "build",
         "isDefault": true
-      }
-    },
-    {
-      "label": "Set up virtual environment",
-      "icon": {
-        "id": "python"
-      },
-      "type": "shell",
-      "windows": {
-        "command": "if not exist .venv (python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt) || exit /b 0"
       },
       "linux": {
-        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true"
+        "command": ".vscode/task_linux.sh"
       },
-      "osx": {
-        "command": "[ ! -d .venv ] && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true"
-      },
-      "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": true
+      "windows": {
+        "command": ".vscode/task_windows.bat"
       }
     }
   ]

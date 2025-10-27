@@ -1,7 +1,7 @@
 {
   "id": "blocktips",
   "name": "BlockTips",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "",
   "author": "FoxedDev",
   "output": "build",
@@ -12,12 +12,7 @@
   "data_pack": {
     "load": [
       "src"
-    ],
-    "render": {
-      "functions": [
-        "*"
-      ]
-    }
+    ]
   },
   "resource_pack": {
     "load": [
@@ -26,15 +21,8 @@
   },
   "pipeline": [
     "build.main",
-    "beet.contrib.installation_advancement",
+    "plugins.pack_install",
     "plugins.advancement_icon",
-    "mecha",
-    "beet.contrib.minify_function",
-    "beet.contrib.minify_json"
-  ],
-  "meta": {
-    "installation_advancement": {
-      "project_advancement_path": "blocktips:installed"
-    }
-  }
+    "mecha"
+  ]
 }

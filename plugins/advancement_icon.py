@@ -3,24 +3,15 @@ __all__ = [
     "advancement_icon",
 ]
 
-
 from typing import Optional
-
-from beet import (
-    Context,
-    ItemModel,
-    Model,
-    Texture,
-    PluginOptions,
-    configurable,
-)
+from beet import Context, ItemModel, Model, Texture, PluginOptions, configurable
 from beet.core.utils import normalize_string
 
 
 class AdvancementIconOptions(PluginOptions):
     advancement_path: Optional[str] = None
     pack_namespace: Optional[str] = None
-    texture_source: Optional[str] = None
+    texture_source: Optional[str] = "src/pack.png"
 
 
 def beet_default(ctx: Context):
@@ -29,21 +20,18 @@ def beet_default(ctx: Context):
 
 @configurable(validator=AdvancementIconOptions)
 def advancement_icon(ctx: Context, opts: AdvancementIconOptions):
-
     namespace = opts.pack_namespace or normalize_string(ctx.project_id)
-    advancement_path = opts.advancement_path or f"{namespace}:installed"
-    texture_source = opts.texture_source or "src/pack.png"
+    advancement_path = opts.advancement_path or f"{namespace}:install"
 
     ctx.data.advancements[advancement_path].data["display"]["icon"] = (
         create_advancement_icon(namespace)
     )
-
     ctx.assets[f"{namespace}:icon"] = create_item_model(namespace)
     ctx.assets[f"{namespace}:item/icon"] = create_model(namespace)
-    ctx.assets[f"{namespace}:item/icon"] = Texture(source_path=texture_source)
+    ctx.assets[f"{namespace}:item/icon"] = Texture(source_path=opts.texture_source)
 
 
-def create_advancement_icon(namespace):
+def create_advancement_icon(namespace: str):
     return {
         "id": "minecraft:paper",
         "components": {"item_model": f"{namespace}:icon"},
