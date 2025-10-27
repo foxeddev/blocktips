@@ -17,10 +17,10 @@
         "isDefault": true
       },
       "linux": {
-        "command": "./.vscode/task_linux.sh"
+        "command": ".vscode/task_linux.sh"
       },
       "windows": {
-        "command": "./.vscode/task_windows.bat"
+        "command": ".vscode/task_windows.bat"
       }
     }
   ]

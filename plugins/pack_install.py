@@ -9,7 +9,6 @@ from beet.core.utils import JsonDict, TextComponent, normalize_string
 
 
 class PackInstallOptions(PluginOptions):
-    # Advancement-related options
     icon: JsonDict = {"id": "minecraft:apple"}
     author_namespace: Optional[str] = None
     author_description: str = ""
@@ -17,7 +16,6 @@ class PackInstallOptions(PluginOptions):
     project_namespace: Optional[str] = None
     project_advancement_path: Optional[str] = None
 
-    # Function-related options
     pack_namespace: Optional[str] = None
     advancement_path: Optional[str] = None
     install_function_path: Optional[str] = None
@@ -34,55 +32,58 @@ def beet_default(ctx: Context):
 
 @configurable(validator=PackInstallOptions)
 def pack_install(ctx: Context, opts: PackInstallOptions):
-    # Determine namespaces and IDs
     author_namespace = opts.author_namespace or normalize_string(ctx.project_author)
     project_namespace = opts.project_namespace or ctx.project_id
     skull_owner = opts.author_skull_owner or ctx.project_author
-    if not author_namespace:
-        raise ValueError("Missing author namespace.")
-    if not skull_owner:
-        raise ValueError("Missing skull owner.")
-
     project_advancement_path = (
-        opts.project_advancement_path or f"{project_namespace}:installed"
+        opts.project_advancement_path or f"{project_namespace}:install"
     )
-
     namespace = opts.pack_namespace or normalize_string(ctx.project_id)
-    advancement_path = opts.advancement_path or project_advancement_path
     install_function_path = opts.install_function_path or f"{namespace}:install"
     install_function_tag = opts.install_function_tag or f"#{namespace}:install"
     uninstall_function_path = opts.uninstall_function_path or f"{namespace}:uninstall"
     uninstall_function_tag = opts.uninstall_function_tag or f"#{namespace}:uninstall"
 
-    # --- Create Advancements ---
-    ctx.data["global:root"] = create_root_advancement()
-    ctx.data[f"global:{author_namespace}"] = create_author_advancement(
-        ctx.project_author, opts.author_description, skull_owner
+    # Advancements
+    if not ctx.data.advancements.get("global:root"):
+        ctx.data.advancements["global:root"] = create_root_advancement()
+    if not ctx.data.advancements.get(f"global:{author_namespace}"):
+        ctx.data.advancements[f"global:{author_namespace}"] = create_author_advancement(
+            ctx.project_author, opts.author_description, skull_owner
+        )
+    if not ctx.data.advancements.get(project_advancement_path):
+        ctx.data.advancements[project_advancement_path] = create_project_advancement(
+            ctx.project_name,
+            ctx.project_description,
+            author_namespace,
+            opts.icon,
+            install_function_path,
+        )
+
+    # Functions
+    if not ctx.data.functions.get(install_function_path):
+        ctx.data.functions[install_function_path] = Function()
+    ctx.data.functions[install_function_path].prepend(
+        create_install_function(
+            ctx,
+            install_function_tag,
+            opts.send_success_messages,
+            opts.send_error_messages,
+        )
     )
-    ctx.data[project_advancement_path] = create_project_advancement(
-        ctx.project_name, ctx.project_description, author_namespace, opts.icon
+    if not ctx.data.functions.get(uninstall_function_path):
+        ctx.data.functions[uninstall_function_path] = Function()
+    ctx.data.functions[uninstall_function_path].prepend(
+        create_uninstall_function(
+            ctx,
+            uninstall_function_tag,
+            opts.send_success_messages,
+            opts.send_error_messages,
+        )
     )
 
-    # --- Link install function to advancement reward ---
-    ctx.data.advancements[advancement_path].data.setdefault("rewards", {})[
-        "function"
-    ] = install_function_path
 
-    # --- Create Functions ---
-    ctx.data.functions[install_function_path] = create_install_function(
-        ctx, install_function_tag, opts.send_success_messages, opts.send_error_messages
-    )
-    ctx.data.functions[uninstall_function_path] = create_uninstall_function(
-        ctx,
-        uninstall_function_tag,
-        opts.send_success_messages,
-        opts.send_error_messages,
-    )
-
-
-# ----------------------
-#  Advancement Creation
-# ----------------------
+##  Advancements
 
 
 def create_root_advancement():
@@ -127,6 +128,7 @@ def create_project_advancement(
     project_description: TextComponent,
     author_namespace: str,
     icon: JsonDict,
+    install_function_path: str,
 ):
     return Advancement(
         {
@@ -139,13 +141,12 @@ def create_project_advancement(
             },
             "parent": f"global:{author_namespace}",
             "criteria": {"trigger": {"trigger": "minecraft:tick"}},
+            "rewards": {"function": install_function_path},
         }
     )
 
 
-# --------------------------
-# Function Creation
-# --------------------------
+## Functions
 
 
 def create_install_function(
@@ -179,8 +180,6 @@ def create_uninstall_function(
         f.append(
             f'tellraw @a {{"text":"Successfully uninstalled {ctx.project_name}!","color":"green"}}'
         )
-
-    # Replaced .extend() with multiple .append() calls
     f.append(
         f'datapack disable "file/{ctx.project_id}_{ctx.project_version}_data_pack"'
     )

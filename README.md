@@ -34,7 +34,7 @@ A pre-configured GitHub template to quickly set up your [Beet](https://www.githu
    pip install -r requirements.txt
    ```
 
-   This should be done automatically if you are using VSCode.
+   > This should be done automatically if you are using VSCode.
 
 4. Update the [beet.json](beet.json) to use your project's name, description and author.
 
