@@ -1,11 +1,14 @@
 if block ~ ~ ~ jukebox:
-    data modify storage blocktips:current_tip temp.song set from block ~ ~ ~ RecordItem.id
-    data modify storage blocktips:current_tip temp.ticks_since_song_started set from block ~ ~ ~ ticks_since_song_started
+    data remove entity @s data.blocktips
+    data modify entity @s data.blocktips.song set from block ~ ~ ~ RecordItem.id
+    data modify entity @s data.blocktips.ticks_since_song_started set from block ~ ~ ~ ticks_since_song_started
 
-    with storage blocktips:current_tip temp:
-        $data merge storage blocktips:current_tip {current_tip:[{"color":"white","text":"$(song)"},"\n",{"color":"gray","text":"⏳: $(ticks_since_song_started)"}]}
+    if data entity @s data.blocktips.song:
+        data modify storage blocktips:current_tip current_tip append value {"color":"white","entity":"@s","nbt":"data.blocktips.song"}
 
-    data remove storage blocktips:current_tip temp
-
-    unless data block ~ ~ ~ RecordItem:
-        data merge storage blocktips:current_tip {current_tip:""}
+    if data entity @s data.blocktips.ticks_since_song_started:
+        store result score #ticks_since_song_started temp run data get entity @s data.blocktips.ticks_since_song_started
+        store result entity @s data.blocktips.ticks_since_song_started int 1 run scoreboard players get #ticks_since_song_started temp
+        data modify storage blocktips:current_tip current_tip append value {"color":"gray","text":"\n⏳ "}
+        data modify storage blocktips:current_tip current_tip append value {"color":"gray","entity":"@s","nbt":"data.blocktips.ticks_since_song_started"}
+        scoreboard players reset #ticks_since_song_started temp

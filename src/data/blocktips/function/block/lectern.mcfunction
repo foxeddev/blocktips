@@ -1,13 +1,19 @@
 if block ~ ~ ~ lectern:
-    data modify storage blocktips:current_tip temp.title set from block ~ ~ ~ Book.components."minecraft:written_book_content".title.raw
-    data modify storage blocktips:current_tip temp.author set from block ~ ~ ~ Book.components."minecraft:written_book_content".author
-    data merge storage blocktips:current_tip {temp:{generation:0}}
-    data modify storage blocktips:current_tip temp.generation set from block ~ ~ ~ Book.components."minecraft:written_book_content".generation
+    data remove entity @s data.blocktips
+    data modify entity @s data.blocktips.title set from block ~ ~ ~ Book.components."minecraft:written_book_content".title.raw
+    data modify entity @s data.blocktips.author set from block ~ ~ ~ Book.components."minecraft:written_book_content".author
+    data modify entity @s data.blocktips.generation set from block ~ ~ ~ Book.components."minecraft:written_book_content".generation
 
-    with storage blocktips:current_tip temp:
-        $data merge storage blocktips:current_tip {current_tip:[{"color":"white","text":"$(title)"},{"text":"\n"},{"color":"gray","translate":"book.byAuthor","with":["$(author)"]},{"text":"\n"},{"color":"gray","translate":"book.generation.$(generation)"}]}
+    if data entity @s data.blocktips.title:
+        data modify entity @s data.blocktips.generation set value 0
+        data modify storage blocktips:current_tip current_tip append value {"color":"white","entity":"@s","nbt":"data.blocktips.title"}
 
-    data remove storage blocktips:current_tip temp
+    if data entity @s data.blocktips.author:
+        data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"\n"}
+        with entity @s data.blocktips:
+            $data modify storage blocktips:current_tip current_tip append value {"color":"gray","translate":"book.byAuthor","with":["$(author)"]}
 
-    unless data block ~ ~ ~ Book:
-        data merge storage blocktips:current_tip {current_tip:""}
+    if data entity @s data.blocktips.generation:
+        data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"\n"}
+        with entity @s data.blocktips:
+            $data modify storage blocktips:current_tip current_tip append value {"color":"gray","translate":"book.generation.$(generation)"}
