@@ -6,8 +6,7 @@
   "author": "FoxedDev",
   "output": "build",
   "require": [
-    "bolt",
-    "beet.contrib.inline_function_tag"
+    "bolt"
   ],
   "data_pack": {
     "load": [
