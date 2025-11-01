@@ -6,6 +6,7 @@ if block ~ ~ ~ #blocktips:has_tips:
     function ./block/lectern
     function ./block/spawner
     function ./block/jukebox
+    function ./block/beacon
 
     data modify entity @n[type=text_display,tag=blocktips.display] text set from storage blocktips:current_tip current_tip
     data remove storage blocktips:current_tip current_tip

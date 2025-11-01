@@ -2,6 +2,7 @@
   "values": [
     "minecraft:lectern",
     "minecraft:spawner",
-    "minecraft:jukebox"
+    "minecraft:jukebox",
+    "minecraft:beacon"
   ]
 }
