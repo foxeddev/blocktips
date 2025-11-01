@@ -4,6 +4,7 @@
     "minecraft:spawner",
     "minecraft:jukebox",
     "minecraft:beacon",
-    "minecraft:beehive"
+    "minecraft:beehive",
+    "minecraft:bee_nest"
   ]
 }

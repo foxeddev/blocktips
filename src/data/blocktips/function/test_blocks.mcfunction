@@ -11,5 +11,6 @@ if block ~ ~ ~ #blocktips:has_tips:
         function ./block/jukebox
         function ./block/beacon
         function ./block/beehive
+        function ./block/bee_nest
 
         data modify entity @s text set from storage blocktips:current_tip current_tip
