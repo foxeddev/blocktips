@@ -22,7 +22,9 @@ if block ~ ~ ~ beehive:
         with entity @s data.blocktips:
             $data modify storage blocktips:current_tip current_tip append value {"color":"white","translate":"container.beehive.bees","with":[$(bees),5]}
 
+        if data entity @s data.blocktips.honey_level:
+            data modify storage blocktips:current_tip current_tip append value "\n"
+
     if data entity @s data.blocktips.honey_level:
-        data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"\n"}
         with entity @s data.blocktips:
             $data modify storage blocktips:current_tip current_tip append value {"color":"white","translate":"container.beehive.honey","with":[$(honey_level),5]}
