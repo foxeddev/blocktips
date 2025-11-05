@@ -1,5 +1,5 @@
 tag @s add blocktips.rc
-scoreboard players set .limit blocktips.rc 50
+scoreboard players operation .limit blocktips.rc = .rc_limit blocktips.options
 execute at @s anchored eyes positioned ^ ^ ^.1 run function ./raycast/loop
 
 function ./raycast/loop:

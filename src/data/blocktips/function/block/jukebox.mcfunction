@@ -10,8 +10,8 @@ if block ~ ~ ~ jukebox:
             data modify storage blocktips:current_tip current_tip append value "\n"
 
     if data entity @s data.blocktips.ticks_since_song_started:
-        store result score #ticks_since_song_started temp run data get entity @s data.blocktips.ticks_since_song_started
-        store result entity @s data.blocktips.ticks_since_song_started int 1 run scoreboard players get #ticks_since_song_started temp
-        scoreboard players reset #ticks_since_song_started temp
+        store result score .ticks_since_song_started temp run data get entity @s data.blocktips.ticks_since_song_started
+        store result entity @s data.blocktips.ticks_since_song_started int 1 run scoreboard players get .ticks_since_song_started temp
+        scoreboard players reset .ticks_since_song_started temp
         data modify storage blocktips:current_tip current_tip append value {"color":"gray","text":"⏳ "}
         data modify storage blocktips:current_tip current_tip append value {"color":"gray","entity":"@s","nbt":"data.blocktips.ticks_since_song_started"}
