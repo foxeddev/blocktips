@@ -9,4 +9,4 @@ as @a[predicate=blocktips:has_tips]:
 
 kill @e[type=marker,tag=blocktips.rc.target]
 kill @e[type=text_display,tag=blocktips.display,scores={blocktips.timer=..0}]
-scoreboard players remove @e[type=text_display,tag=blocktips.display] blocktips.timer 0
+scoreboard players remove @e[type=text_display,tag=blocktips.display] blocktips.timer 1
