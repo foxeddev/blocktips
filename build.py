@@ -22,17 +22,12 @@ def main(ctx: Context):
     )
 
     notes = json.load(
-        open(
-            ctx.directory
-            / "src/data/blocktips/function/block/note_block/notes.json"
-        )
+        open(ctx.directory / "src/data/blocktips/function/block/note_block/notes.json")
     )
 
     if not ctx.assets.languages.get("blocktips:en_us"):
         ctx.assets.languages["blocktips:en_us"] = Language()
 
     ctx.assets.languages["blocktips:en_us"].merge(
-        Language(
-            {f"blocktips.note_block.note.{k}": v for k, v in notes.items()}
-        )
+        Language({f"blocktips.note_block.note.{k}": v for k, v in notes.items()})
     )
