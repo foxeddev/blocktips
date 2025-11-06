@@ -10,6 +10,9 @@ if block ~ ~ ~ beacon:
         if data storage blocktips:current_tip temp.secondary_effect:
             data modify storage blocktips:current_tip current_tip append value "\n"
 
+        unless data storage blocktips:current_tip temp.secondary_effect if data storage blocktips:current_tip temp.levels:
+            data modify storage blocktips:current_tip current_tip append value "\n"
+
     if data storage blocktips:current_tip temp.secondary_effect:
         data modify storage blocktips:current_tip current_tip append value "② "
         data modify storage blocktips:current_tip current_tip append string storage blocktips:current_tip temp.secondary_effect
