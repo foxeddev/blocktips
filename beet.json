@@ -22,6 +22,7 @@
     "build.main",
     "plugins.pack_install",
     "plugins.advancement_icon",
-    "mecha"
+    "mecha",
+    "plugins.output_zip"
   ]
 }
