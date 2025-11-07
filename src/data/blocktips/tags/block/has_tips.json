@@ -6,6 +6,7 @@
     "minecraft:beacon",
     "minecraft:beehive",
     "minecraft:bee_nest",
-    "minecraft:note_block"
+    "minecraft:note_block",
+    "minecraft:enchanting_table"
   ]
 }

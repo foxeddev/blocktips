@@ -13,5 +13,6 @@ if block ~ ~ ~ #blocktips:has_tips:
         function ./block/beehive
         function ./block/bee_nest
         function ./block/note_block
+        function ./block/enchanting_table
 
         data modify entity @s text set from storage blocktips:current_tip current_tip
