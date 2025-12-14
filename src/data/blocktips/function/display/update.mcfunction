@@ -10,17 +10,8 @@ function ./update/scale
 
 if score @s blocktips.timer matches ..9 run data modify entity @s interpolation_duration set value 1
 
-title @a actionbar { nbt: "transformation.scale[0]", entity: "@s" }
-
 data modify storage blocktips:current_tip current_tip set value [ "" ]
 
-function ../block/lectern
-function ../block/spawner
-function ../block/jukebox
-function ../block/beacon
-function ../block/beehive
-function ../block/bee_nest
-function ../block/note_block
-function ../block/enchanting_table
+function #blocktips:blocks
 
 data modify entity @s text set from storage blocktips:current_tip current_tip

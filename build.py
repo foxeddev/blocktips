@@ -1,4 +1,4 @@
-from beet import Context, Language
+from beet import BlockTag, Context, FunctionTag, Language
 import json
 
 
@@ -34,3 +34,14 @@ def main(ctx: Context):
     ctx.assets.languages["blocktips:en_us"].merge(
         Language({f"blocktips.note_block.note.{k}": v for k, v in notes.items()})
     )
+
+    if not ctx.data.block_tags.get("blocktips:has_tips"):
+        ctx.data.block_tags["blocktips:has_tips"] = BlockTag()
+
+    if not ctx.data.function_tags.get("blocktips:blocks"):
+        ctx.data.function_tags["blocktips:blocks"] = FunctionTag()
+
+    for function in ctx.data.functions.match("blocktips:block/*"):
+        block = function.removeprefix("blocktips:block/").replace("/", ":")
+        ctx.data.function_tags["blocktips:blocks"].append(FunctionTag({"values": [function]}))
+        ctx.data.block_tags["blocktips:has_tips"].append(BlockTag({"values": [block]}))
