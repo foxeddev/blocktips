@@ -23,6 +23,7 @@
     "plugins.pack_install",
     "plugins.advancement_icon",
     "mecha",
+    "plugins.fix_unicode",
     "plugins.output_zip"
   ]
 }
