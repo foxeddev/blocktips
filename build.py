@@ -6,7 +6,7 @@ def main(ctx: Context):
     instruments = json.load(
         open(
             ctx.directory
-            / "src/data/blocktips/function/block/note_block/instruments.json"
+            / "src/data/blocktips/function/block/minecraft/note_block/instruments.json"
         )
     )
 
@@ -22,7 +22,10 @@ def main(ctx: Context):
     )
 
     notes = json.load(
-        open(ctx.directory / "src/data/blocktips/function/block/note_block/notes.json")
+        open(
+            ctx.directory
+            / "src/data/blocktips/function/block/minecraft/note_block/notes.json"
+        )
     )
 
     if not ctx.assets.languages.get("blocktips:en_us"):
