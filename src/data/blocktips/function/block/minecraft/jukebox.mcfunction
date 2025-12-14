@@ -4,6 +4,7 @@ if block ~ ~ ~ jukebox:
     data modify entity @s data.blocktips.ticks_since_song_started set from block ~ ~ ~ ticks_since_song_started
 
     if data entity @s data.blocktips.song:
+        data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"🎶 "}
         data modify storage blocktips:current_tip current_tip append value {"color":"white","entity":"@s","nbt":"data.blocktips.song"}
 
         if data entity @s data.blocktips.ticks_since_song_started:

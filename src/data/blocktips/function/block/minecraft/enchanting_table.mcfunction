@@ -14,5 +14,6 @@ if block ~ ~ ~ enchanting_table:
 
     store result entity @s data.blocktips.bookshelves int 1 run scoreboard players get .bookshelves temp
     scoreboard players reset .bookshelves temp
+    data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"🪄 "}
     data modify storage blocktips:current_tip current_tip append value {"color":"white","entity":"@s","nbt":"data.blocktips.bookshelves"}
     data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"/15"}

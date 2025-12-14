@@ -9,6 +9,7 @@ if block ~ ~ ~ note_block:
 
     if data entity @s data.blocktips.note:
         with entity @s data.blocktips:
+            data modify storage blocktips:current_tip current_tip append value {"color":"white","text":"🎵 "}
             $data modify storage blocktips:current_tip current_tip append value {"color":"white","translate":"blocktips.note_block.note.$(note)"}
 
         if data entity @s data.blocktips.instrument:
@@ -16,4 +17,5 @@ if block ~ ~ ~ note_block:
 
     if data entity @s data.blocktips.instrument:
         with entity @s data.blocktips:
+            data modify storage blocktips:current_tip current_tip append value {"color":"gray","text":"🎹 "}
             $data modify storage blocktips:current_tip current_tip append value {"color":"gray","translate":"blocktips.note_block.instrument.$(instrument)"}
